@@ -1,0 +1,75 @@
+---
+# tasks file for common
+- name: Gather OS specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution|lower }}-{{ ansible_distribution_version }}.yml"
+    - "{{ ansible_distribution|lower }}.yml"
+    - "{{ ansible_os_family|lower }}.yml"
+
+- name: Ensure profile.d exists
+  file:
+    path: /etc/profile.d
+    state: directory
+
+- name: Add bash history settings
+  copy:
+    src: history.sh
+    dest: /etc/profile.d/history.sh
+    mode: 0755
+
+- name: Add bash aliases
+  copy:
+    src: aliases.sh
+    dest: /etc/profile.d/aliases.sh
+    mode: 0755
+
+- name: Add TERM fix script
+  copy:
+    src: fixterm.sh
+    dest: /etc/profile.d/fixterm.sh
+    mode: 0755
+
+- set_fact:
+    common_packages: "{{ common_required_packages }}+{{ common_packages }}"
+
+- name: Install common apt packages
+  apt:
+    name: "{{ item }}"
+    state: installed
+    update_cache: yes
+  with_items: common_packages
+  when: ansible_pkg_mgr == 'apt'
+
+- name: Install common yum packages
+  yum:
+    name: "{{ item }}"
+    state: installed
+    update_cache: yes
+  with_items: common_packages
+  when: ansible_pkg_mgr == 'yum'
+
+- name: Ensure public IP is in /etc/hosts
+  lineinfile:
+    dest: /etc/hosts
+    state: present
+    line: "{{ ansible_default_ipv4.address }} {{ ansible_fqdn }} {{ ansible_hostname }}"
+    regexp: "{{ ansible_hostname }}"
+
+- name: Enable sysstat in config
+  lineinfile:
+    dest: /etc/default/sysstat
+    state: present
+    line: "ENABLED='true'"
+    regexp: "^ENABLED="
+
+- name: Enable and start sysstat service
+  service:
+    name: sysstat
+    state: started
+    enabled: yes
+
+- include: configure_ntp.yml
+  tags: ntp
+
+# vim:ft=ansible:

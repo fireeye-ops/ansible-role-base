@@ -1,0 +1,5 @@
+---
+# vars file for common
+common_required_packages:
+  - vim
+  - sysstat

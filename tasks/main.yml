@@ -56,18 +56,7 @@
     line: "{{ ansible_default_ipv4.address }} {{ ansible_fqdn }} {{ ansible_hostname }}"
     regexp: "{{ ansible_hostname }}"
 
-- name: Enable sysstat in config
-  lineinfile:
-    dest: /etc/default/sysstat
-    state: present
-    line: "ENABLED='true'"
-    regexp: "^ENABLED="
-
-- name: Enable and start sysstat service
-  service:
-    name: sysstat
-    state: started
-    enabled: yes
+- include: configure_sysstat/main.yml
 
 - include: configure_ntp.yml
   tags: ntp

@@ -1,0 +1,18 @@
+---
+- name: Create sysstat storage directory
+  file:
+    path: /var/log/sysstat
+    state: directory
+    mode: 0755
+
+- include: debian.yml
+  when: ansible_os_family == 'Debian'
+
+- include: redhat.yml
+  when: ansible_os_family == 'RedHat'
+
+- name: Enable and start sysstat service
+  service:
+    name: sysstat
+    state: started
+    enabled: yes

@@ -1,0 +1,5 @@
+---
+# vars file for RedHat based distros
+common_required_packages:
+  - vim
+  - sysstat

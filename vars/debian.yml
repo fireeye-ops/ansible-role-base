@@ -1,0 +1,5 @@
+---
+# vars file for Debian-based distros
+common_required_packages:
+  - vim
+  - sysstat

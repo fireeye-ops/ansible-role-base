@@ -1,0 +1,34 @@
+---
+- name: Create sysstat storage directory
+  file:
+    path: /var/log/sysstat
+    state: directory
+    mode: 0755
+
+- name: Copy sysstat configuration
+  copy:
+    src: sysstat
+    dest: /etc/sysstat/sysstat
+    mode: 0644
+  when: ansible_os_family == 'Debian'
+
+- name: Enable sysstat in config
+  lineinfile:
+    dest: /etc/default/sysstat
+    state: present
+    line: "ENABLED='true'"
+    regexp: "^ENABLED="
+  when: ansible_os_family == 'Debian'
+
+- name: Copy sysstat configuration
+  copy:
+    src: sysstat
+    dest: /etc/sysconfig/sysstat
+    mode: 0644
+  when: ansible_os_family == 'RedHat'
+
+- name: Enable and start sysstat service
+  service:
+    name: sysstat
+    state: started
+    enabled: yes

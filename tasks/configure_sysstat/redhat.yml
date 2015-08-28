@@ -1,6 +1,0 @@
----
-- name: Copy sysstat configuration
-  copy:
-    src: sysstat
-    dest: /etc/sysconfig/sysstat
-    mode: 0644

@@ -3,3 +3,6 @@
 common_required_packages:
   - vim
   - sysstat
+  - python-dev
+  - python-pip
+  - git

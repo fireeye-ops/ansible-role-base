@@ -41,6 +41,10 @@
   with_items: common_packages
   when: ansible_pkg_mgr == 'apt'
 
+- name: Install EPEL repo
+  yum: name=epel-release state=installed update_cache=yes
+  when: ansible_pkg_mgr == 'yum'
+
 - name: Install common yum packages
   yum:
     name: "{{ item }}"

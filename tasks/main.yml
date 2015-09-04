@@ -59,6 +59,8 @@
     state: present
     line: "{{ ansible_default_ipv4.address }} {{ ansible_fqdn }} {{ ansible_hostname }}"
     regexp: "{{ ansible_hostname }}"
+  tags:
+    - common_edit_hosts
 
 - include: configure_sysstat.yml
 

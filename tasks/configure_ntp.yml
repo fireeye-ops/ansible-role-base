@@ -31,6 +31,6 @@
   cron:
     name: Sync time
     minute: "*/5"
-    job: "/usr/sbin/ntpdate {{ ' '.join(ntp_servers) }}"
+    job: "/usr/sbin/ntpdate {{ ' '.join(ntp_servers) }} 2>&1 >/dev/null"
 
 # vim:ft=ansible

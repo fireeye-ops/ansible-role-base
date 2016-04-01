@@ -38,7 +38,7 @@
     name: "{{ item }}"
     state: installed
     update_cache: yes
-  with_items: common_packages
+  with_items: "{{ common_packages }}"
   when: ansible_pkg_mgr == 'apt'
 
 - name: Install EPEL repo
@@ -50,7 +50,7 @@
     name: "{{ item }}"
     state: installed
     update_cache: yes
-  with_items: common_packages
+  with_items: "{{ common_packages }}"
   when: ansible_pkg_mgr == 'yum'
 
 - name: Ensure public IP is in /etc/hosts

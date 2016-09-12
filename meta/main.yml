@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Musee Ullah
-  description: 
+  description: Common configuration for FireEye Labs-maintained machines
   company: FireEye, Inc.
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
@@ -15,12 +15,10 @@ galaxy_info:
   - name: Ubuntu
     versions:
     - trusty
+    - xenial
   - name: Debian
     versions:
     - jessie
   categories:
-  - development
-  - monitoring
-  - packaging
   - system
 dependencies: []

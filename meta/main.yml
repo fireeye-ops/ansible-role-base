@@ -5,9 +5,9 @@ galaxy_info:
   company: FireEye, Inc.
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
-  issue_tracker_url: https://github.eng.fireeye.com/automatons/playbook-common-lae/issues
+  issue_tracker_url: https://github.eng.fireeye.com/automatons/ansible-role-common/issues
   license: MIT
-  min_ansible_version: 1.2
+  min_ansible_version: 2.1
   platforms:
   - name: EL
     versions:

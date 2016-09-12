@@ -8,9 +8,8 @@
 - name: Copy sysstat configuration
   copy:
     src: sysstat
-    dest: /etc/sysstat/sysstat
+    dest: "{{ common_sysstat_config }}"
     mode: 0644
-  when: ansible_os_family == 'Debian'
 
 - name: Enable sysstat in config
   lineinfile:
@@ -19,13 +18,6 @@
     line: "ENABLED='true'"
     regexp: "^ENABLED="
   when: ansible_os_family == 'Debian'
-
-- name: Copy sysstat configuration
-  copy:
-    src: sysstat
-    dest: /etc/sysconfig/sysstat
-    mode: 0644
-  when: ansible_os_family == 'RedHat'
 
 - name: Enable and start sysstat service
   service:

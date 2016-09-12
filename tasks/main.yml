@@ -1,9 +1,10 @@
 ---
 # tasks file for common
-- name: Gather OS specific variables
+- name: "Gather OS specific variables"
   include_vars: "{{ item }}"
   with_first_found:
     - "{{ ansible_distribution|lower }}-{{ ansible_distribution_version }}.yml"
+    - "{{ ansible_distribution|lower }}-{{ ansible_distribution_major_version }}.yml"
     - "{{ ansible_distribution|lower }}.yml"
     - "{{ ansible_os_family|lower }}.yml"
 
@@ -31,27 +32,14 @@
     mode: 0755
 
 - set_fact:
-    common_packages: "{{ common_required_packages }}+{{ common_packages }}"
+    __common_packages: "{{ common_required_packages }}+{{ common_packages }}"
 
 - name: Install common apt packages
-  apt:
+  package:
     name: "{{ item }}"
     state: installed
     update_cache: yes
-  with_items: "{{ common_packages }}"
-  when: ansible_pkg_mgr == 'apt'
-
-- name: Install EPEL repo
-  yum: name=epel-release state=installed update_cache=yes
-  when: ansible_pkg_mgr == 'yum'
-
-- name: Install common yum packages
-  yum:
-    name: "{{ item }}"
-    state: installed
-    update_cache: yes
-  with_items: "{{ common_packages }}"
-  when: ansible_pkg_mgr == 'yum'
+  with_items: "{{ __common_packages }}"
 
 - name: Ensure public IP is in /etc/hosts
   lineinfile:
@@ -59,12 +47,8 @@
     state: present
     line: "{{ ansible_default_ipv4.address }} {{ ansible_fqdn }} {{ ansible_hostname }}"
     regexp: "{{ ansible_hostname }}"
-  tags:
-    - common_edit_hosts
+  when: "{{ common_edit_hosts }}"
 
 - include: configure_sysstat.yml
-
-- include: configure_ntp.yml
-  tags: ntp
 
 # vim:ft=ansible:

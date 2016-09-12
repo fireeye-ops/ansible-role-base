@@ -1,10 +1,4 @@
 ---
 # defaults file for common
-common_packages: [
-  ngrep
-]
-ntp_servers: [
-  sca-ntp1.eng.fireeye.com
-  sca-ntp2.eng.fireeye.com
-  sca-ntp3.eng.fireeye.com
-]
+common_packages: []
+common_edit_hosts: false

@@ -24,8 +24,8 @@ before_cache:
   - sudo chown $USER. $HOME/lxc/cache.tar
 
 env:
-  - LXC_NAME=jessie-test LXC_TEMPLATE=debian
-  - LXC_NAME=centos7-test LXC_TEMPLATE=centos
+  - LXC_NAME=test-deb8 LXC_DISTRO=debian LXC_RELEASE=jessie
+  - LXC_NAME=test-cent7 LXC_DISTRO=centos LXC_RELEASE=7
 
 install:
   # Install ansible
@@ -42,10 +42,9 @@ install:
 
   # Create and configure LXC container to test against
   - export LXC_ROOTFS=/var/lib/lxc/$LXC_NAME/rootfs
-  - sudo MIRROR=http://mirrors.us.kernel.org/$LXC_TEMPLATE LANG= LC_ALL= LC_CTYPE= lxc-create -n $LXC_NAME -t $LXC_TEMPLATE
-  - sudo lxc-start -n $LXC_NAME && sleep 5
-  - '[ "x${LXC_TEMPLATE}" == "xdebian" ] && sudo lxc-attach -n $LXC_NAME -- apt-get -y --force-yes install python || true'
-  - '[ "x${LXC_TEMPLATE}" == "xcentos" ] && sudo lxc-attach -n $LXC_NAME -- yum -y install python || true'
+  - '[ "x${LXC_DISTRO}" == "xdebian" ] && sudo LANG= LC_ALL= LC_CTYPE= lxc-create -n $LXC_NAME -t debian -- -r $LXC_RELEASE -a amd64 --mirror http://mirrors.us.kernel.org/debian --packages python || true'
+  - '[ "x${LXC_DISTRO}" == "xcentos" ] && sudo root_expire_password=no lxc-create -n $LXC_NAME -t centos -- -R $LXC_RELEASE -a amd64 || true'
+  - sudo lxc-start -n $LXC_NAME
   - sudo /bin/bash -c "printf '\n$(sudo lxc-info -Hin $LXC_NAME) test.lxc' >> /etc/hosts"
   - ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
   - sudo mkdir -vm 0700 $LXC_ROOTFS/root/.ssh/

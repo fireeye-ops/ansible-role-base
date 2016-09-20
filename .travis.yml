@@ -45,7 +45,7 @@ install:
   - export LXC_ROOTFS=/var/lib/lxc/$LXC_NAME/rootfs
   - '[ "x${LXC_DISTRO}" == "xdebian" ] && sudo LANG= LC_ALL= LC_CTYPE= lxc-create -n $LXC_NAME -t debian -- -r $LXC_RELEASE --mirror http://mirrors.us.kernel.org/debian --packages python || true'
   - '[ "x${LXC_DISTRO}" == "xcentos" ] && sudo root_expire_password=no lxc-create -n $LXC_NAME -t centos -- -R $LXC_RELEASE || true'
-  - 'sudo lxc-start -n $LXC_NAME && until (sudo lxc-attach -n $LXC_NAME -- runlevel | grep -qv "^N N$"); do printf . && sleep 1; done'
+  - 'sudo lxc-start -n $LXC_NAME && until (sudo lxc-info -n $LXC_NAME | grep -q ^IP:); do printf . && sleep 1; done && sleep 2'
   - sudo /bin/bash -c "printf '\n$(sudo lxc-info -Hin $LXC_NAME) test.lxc' >> /etc/hosts"
   - ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
   - sudo mkdir -vm 0700 $LXC_ROOTFS/root/.ssh/

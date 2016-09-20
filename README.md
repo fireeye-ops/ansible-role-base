@@ -1,15 +1,18 @@
-common-lae
+[![Build Status](https://travis-ci.org/fireeye-ops/ansible-role-base.svg?branch=master)](https://travis-ci.org/fireeye-ops/ansible-role-base)
+[![Galaxy Role](https://img.shields.io/badge/ansible--galaxy-base-blue.svg)](https://galaxy.ansible.com/fireeye-ops/base/)
+
+fireeye-ops.base
 =========
 
-Common configuration for all machines maintained by Musee
+Base configuration for FireEye Labs Linux hosts
 
 Role Variables
 --------------
 
 |Name|Type|Description|Default|
 |----|----|-----------|-------|
-`ntp_servers`|List|NTP servers to sync to|[sca-ntp1.eng.fireeye.com, sca-ntp2.eng.fireeye.com, sca-ntp3.eng.fireeye.com]
-`common_packages`|List|OS Packages to install|[ngrep]
+`common_packages`|List|OS Packages to install|[]
+`common_edit_hosts`|Boolean|Inserts an entry into /etc/hosts for host's public IP|false
 
 Example Playbook
 ----------------

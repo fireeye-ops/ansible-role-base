@@ -26,7 +26,11 @@ before_cache:
 
 env:
   - LXC_NAME=test-deb8 LXC_DISTRO=debian LXC_RELEASE=jessie
+  - LXC_NAME=test-deb7 LXC_DISTRO=debian LXC_RELEASE=wheezy
+  - LXC_NAME=test-ubuntu14lts LXC_DISTRO=ubuntu LXC_RELEASE=trusty
+  - LXC_NAME=test-ubuntu16lts LXC_DISTRO=ubuntu LXC_RELEASE=xenial
   - LXC_NAME=test-cent7 LXC_DISTRO=centos LXC_RELEASE=7
+  - LXC_NAME=test-cent6 LXC_DISTRO=centos LXC_RELEASE=6
 
 install:
   # Install ansible

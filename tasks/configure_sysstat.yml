@@ -10,6 +10,8 @@
     src: sysstat
     dest: "{{ base_sysstat_config }}"
     mode: 0644
+  notify:
+    - start sysstat
 
 - name: Enable sysstat in config
   lineinfile:
@@ -19,8 +21,7 @@
     regexp: "^ENABLED="
   when: ansible_os_family == 'Debian'
 
-- name: Enable and start sysstat service
+- name: Enable sysstat service
   service:
     name: sysstat
-    state: started
     enabled: yes

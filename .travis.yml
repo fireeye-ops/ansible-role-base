@@ -13,6 +13,7 @@ addons:
     - lxc
     - lxc-templates
     - yum
+    - expect-dev
 
 cache:
   directories:
@@ -26,7 +27,11 @@ before_cache:
 
 env:
   - LXC_NAME=test-deb8 LXC_DISTRO=debian LXC_RELEASE=jessie
+  - LXC_NAME=test-deb7 LXC_DISTRO=debian LXC_RELEASE=wheezy
+  - LXC_NAME=test-ubuntu14lts LXC_DISTRO=ubuntu LXC_RELEASE=trusty
+  - LXC_NAME=test-ubuntu16lts LXC_DISTRO=ubuntu LXC_RELEASE=xenial
   - LXC_NAME=test-cent7 LXC_DISTRO=centos LXC_RELEASE=7
+  - LXC_NAME=test-cent6 LXC_DISTRO=centos LXC_RELEASE=6
 
 install:
   # Install ansible
@@ -45,6 +50,7 @@ install:
   - export LXC_ROOTFS=/var/lib/lxc/$LXC_NAME/rootfs
   - '[ "x${LXC_DISTRO}" == "xdebian" ] && sudo LANG= LC_ALL= LC_CTYPE= lxc-create -n $LXC_NAME -t debian -- -r $LXC_RELEASE --mirror http://mirrors.us.kernel.org/debian --packages python || true'
   - '[ "x${LXC_DISTRO}" == "xcentos" ] && sudo root_expire_password=no lxc-create -n $LXC_NAME -t centos -- -R $LXC_RELEASE || true'
+  - '[ "x${LXC_DISTRO}" == "xubuntu" ] && sudo lxc-create -n $LXC_NAME -t ubuntu -- -r $LXC_RELEASE --mirror http://mirrors.us.kernel.org/ubuntu --packages python || true'
   - 'sudo lxc-start -n $LXC_NAME && until (sudo lxc-info -n $LXC_NAME | grep -q ^IP:); do printf . && sleep 1; done && sleep 2'
   - sudo /bin/bash -c "printf '\n$(sudo lxc-info -Hin $LXC_NAME) test.lxc' >> /etc/hosts"
   - ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
@@ -60,10 +66,12 @@ script:
 
   # Perform a another test run with the playbook to check for idempotency
   - >
-    ansible-playbook tests/test.yml -i tests/inventory
-    | grep -qP 'changed=0.*failed=0'
+    unbuffer ansible-playbook tests/test.yml -i tests/inventory
+    | tee /tmp/idempotency.log
+  - >
+    tail /tmp/idempotency.log | grep -qP 'changed=0.*failed=0'
     && (echo "Idempotence: PASS"; exit 0)
-    || (echo "Idempotence: FAIL"; exit 1)
+    || (echo "Idempotence: FAIL"; cat /tmp/idempotency.log; exit 1)
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

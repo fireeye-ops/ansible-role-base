@@ -12,24 +12,17 @@
   file:
     path: /etc/profile.d
     state: directory
-
-- name: Add bash history settings
-  copy:
-    src: history.sh
-    dest: /etc/profile.d/history.sh
     mode: 0755
 
-- name: Add bash aliases
+- name: Install bash environment scripts into profile.d
   copy:
-    src: aliases.sh
-    dest: /etc/profile.d/aliases.sh
+    src: "{{ item }}"
+    dest: "/etc/profile.d/{{ item }}"
     mode: 0755
-
-- name: Add TERM fix script
-  copy:
-    src: fixterm.sh
-    dest: /etc/profile.d/fixterm.sh
-    mode: 0755
+  with_items:
+    - history.sh
+    - aliases.sh
+    - fixterm.sh
 
 - name: Install packf and unpackf
   copy:

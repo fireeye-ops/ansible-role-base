@@ -1,0 +1,6 @@
+#!/bin/bash
+# http://tltech.com/info/paste-into-console/
+# Compress and base64 encode specified files
+# Great for copy/paste for small files. Use unpackf to decode
+b64e() { perl -e 'use MIME::Base64 qw(encode_base64);$/=undef;print encode_base64(<>);'; }
+tar -c $@ | gzip | b64e

@@ -1,0 +1,6 @@
+#!/bin/bash
+# http://tltech.com/info/paste-into-console/
+# Base64 decode stdin and un tar.gz
+# Reverse of "packf" -- great for copy/paste for small files
+b64d() { perl -e 'use MIME::Base64 qw(decode_base64);$/=undef;print decode_base64(<>);'; }
+b64d | tar -zx $@

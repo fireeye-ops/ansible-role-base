@@ -31,6 +31,15 @@
     dest: /etc/profile.d/fixterm.sh
     mode: 0755
 
+- name: Install packf and unpackf
+  copy:
+    src: "{{ item }}"
+    dest: "/usr/bin/{{ item }}"
+    mode: 0755
+  with_items:
+    - packf
+    - unpackf
+
 - set_fact:
     __common_packages: "{{ common_required_packages }}+{{ common_packages }}"
 

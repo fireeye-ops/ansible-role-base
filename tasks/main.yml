@@ -1,5 +1,5 @@
 ---
-# tasks file for common
+# tasks file for base
 - name: "Gather OS specific variables"
   include_vars: "{{ item }}"
   with_first_found:
@@ -34,14 +34,14 @@
     - unpackf
 
 - set_fact:
-    __common_packages: "{{ common_required_packages }}+{{ common_packages }}"
+    __base_packages: "{{ base_required_packages }}+{{ base_packages }}"
 
-- name: Install common apt packages
+- name: Install base apt packages
   package:
     name: "{{ item }}"
     state: installed
     update_cache: yes
-  with_items: "{{ __common_packages }}"
+  with_items: "{{ __base_packages }}"
 
 - name: Ensure public IP is in /etc/hosts
   lineinfile:
@@ -49,7 +49,7 @@
     state: present
     line: "{{ ansible_default_ipv4.address }} {{ ansible_fqdn }} {{ ansible_hostname }}"
     regexp: "{{ ansible_hostname }}"
-  when: "{{ common_edit_hosts }}"
+  when: "{{ base_edit_hosts }}"
 
 - include: configure_sysstat.yml
 

@@ -1,6 +1,6 @@
 ---
 # vars file for RedHat based distros
-common_required_packages:
+base_required_packages:
   - vim
   - sysstat
-common_sysstat_config: /etc/sysconfig/sysstat
+base_sysstat_config: /etc/sysconfig/sysstat

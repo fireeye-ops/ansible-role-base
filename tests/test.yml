@@ -4,3 +4,7 @@
   become: True
   roles:
     - ansible-role-base
+  vars:
+    base_packages:
+      - ngrep
+    base_edit_hosts: true

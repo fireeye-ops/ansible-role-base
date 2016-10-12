@@ -1,4 +1,4 @@
 ---
-# defaults file for common
-common_packages: []
-common_edit_hosts: false
+# defaults file for base
+base_packages: []
+base_edit_hosts: false

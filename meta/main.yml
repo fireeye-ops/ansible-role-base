@@ -1,11 +1,8 @@
 ---
 galaxy_info:
   author: Musee Ullah
-  description: Common configuration for FireEye Labs-maintained machines
+  description: Base configuration for FireEye Labs-maintained machines
   company: FireEye, Inc.
-  # If the issue tracker for your role is not on github, uncomment the
-  # next line and provide a value
-  issue_tracker_url: https://github.eng.fireeye.com/automatons/ansible-role-common/issues
   license: MIT
   min_ansible_version: 2.1
   platforms:

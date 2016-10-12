@@ -8,7 +8,7 @@
 - name: Copy sysstat configuration
   copy:
     src: sysstat
-    dest: "{{ common_sysstat_config }}"
+    dest: "{{ base_sysstat_config }}"
     mode: 0644
 
 - name: Enable sysstat in config

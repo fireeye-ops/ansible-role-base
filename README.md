@@ -11,8 +11,8 @@ Role Variables
 
 |Name|Type|Description|Default|
 |----|----|-----------|-------|
-`common_packages`|List|OS Packages to install|[]
-`common_edit_hosts`|Boolean|Inserts an entry into /etc/hosts for host's public IP|false
+`base_packages`|List|OS Packages to install|[]
+`base_edit_hosts`|Boolean|Inserts an entry into /etc/hosts for host's public IP|false
 
 Example Playbook
 ----------------
@@ -21,4 +21,4 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: all
       roles:
-         - { role: common, common_packages: [ 'ngrep' ] }
+         - { role: fireeye-ops.base, base_packages: [ 'ngrep' ] }

@@ -36,7 +36,7 @@
 - set_fact:
     __base_packages: "{{ base_required_packages }}+{{ base_packages }}"
 
-- name: Install base apt packages
+- name: Install base packages
   package:
     name: "{{ item }}"
     state: installed

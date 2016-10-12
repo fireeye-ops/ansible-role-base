@@ -6,5 +6,5 @@
     - ansible-role-base
   vars:
     base_packages:
-      - ngrep
+      - tcpdump
     base_edit_hosts: true

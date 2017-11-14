@@ -1,13 +1,13 @@
 ---
 - name: Create sysstat storage directory
   file:
-    path: /var/log/sysstat
+    path: "{{ base_sysstat_directory }}"
     state: directory
     mode: 0755
 
 - name: Copy sysstat configuration
-  copy:
-    src: sysstat
+  template:
+    src: sysstat.j2
     dest: "{{ base_sysstat_config }}"
     mode: 0644
   notify:

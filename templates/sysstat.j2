@@ -1,3 +1,4 @@
+# {{ ansible_managed }}
 # sysstat configuration file. See sysstat(5) manual page.
 
 # How long to keep log files (in days).
@@ -16,7 +17,7 @@ COMPRESSAFTER=14
 SADC_OPTIONS="-S DISK"
 
 # Directory where sa and sar files are saved.
-SA_DIR=/var/log/sysstat
+SA_DIR={{ base_sysstat_directory }}
 
 # Compression program to use.
 ZIP="bzip2"

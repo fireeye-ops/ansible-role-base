@@ -49,7 +49,7 @@
     state: present
     line: "{{ ansible_default_ipv4.address }} {{ ansible_fqdn }} {{ ansible_hostname }}"
     regexp: "{{ ansible_hostname }}"
-  when: "{{ base_edit_hosts }}"
+  when: base_edit_hosts
 
 - include_tasks: configure_sysstat.yml
 

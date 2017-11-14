@@ -1,0 +1,5 @@
+---
+ansible_ssh_user: root
+base_packages:
+  - tcpdump
+base_edit_hosts: true

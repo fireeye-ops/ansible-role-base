@@ -1,10 +1,5 @@
 ---
-- hosts: test.lxc
-  remote_user: root
-  become: True
-  roles:
-    - ansible-role-base
-  vars:
-    base_packages:
-      - tcpdump
-    base_edit_hosts: true
+- hosts: all
+  tasks:
+    - name: Run sar from sysstat
+      command: sar

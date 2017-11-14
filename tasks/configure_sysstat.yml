@@ -11,7 +11,7 @@
     dest: "{{ base_sysstat_config }}"
     mode: 0644
   notify:
-    - start sysstat
+    - restart sysstat
 
 - name: Enable sysstat in config
   lineinfile:

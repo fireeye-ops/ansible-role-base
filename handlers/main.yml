@@ -3,4 +3,4 @@
 - name: start sysstat
   service:
     name: sysstat
-    state: started
+    state: restarted

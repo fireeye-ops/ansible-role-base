@@ -1,6 +1,6 @@
 ---
 # handlers file for base
-- name: start sysstat
+- name: restart sysstat
   service:
     name: sysstat
     state: restarted

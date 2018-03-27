@@ -3,4 +3,7 @@
 base_required_packages:
   - vim
   - sysstat
+  - ca-certificates
 base_sysstat_config: /etc/sysconfig/sysstat
+base_cacert_path: /etc/pki/ca-trust/source/anchors
+base_cacert_update_cmd: "update-ca-trust extract"

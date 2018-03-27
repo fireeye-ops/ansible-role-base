@@ -51,6 +51,6 @@
     regexp: "{{ ansible_hostname }}"
   when: base_edit_hosts
 
-- include_tasks: configure_sysstat.yml
+- import_tasks: configure_sysstat.yml
 
 # vim:ft=ansible:

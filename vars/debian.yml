@@ -3,4 +3,7 @@
 base_required_packages:
   - vim
   - sysstat
+  - ca-certificates
 base_sysstat_config: /etc/sysstat/sysstat
+base_cacert_path: /usr/local/share/ca-certificates
+base_cacert_update_cmd: "update-ca-certificates"

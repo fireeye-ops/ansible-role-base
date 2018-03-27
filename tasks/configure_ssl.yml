@@ -1,0 +1,21 @@
+---
+#- name: Check if dynamic CA configuration is enabled on EL6
+#  stat:
+#- name: Enable dynamic CA configuration on RHEL/CentOS 6
+#  
+- name: Copy FireEye CA certificates to system
+  copy:
+    src: "{{ item }}"
+    dest: "{{ base_cacerts_path }}"
+  with_items:
+    - FireEye_Root_CA_SHA1.crt
+    - FireEye_Root_CA_SHA2.crt
+    - FireEye_Issuing_CA1_SHA1.crt
+    - FireEye_Issuing_CA1_SHA2.crt
+    - FireEye_Issuing_CA2_SHA1.crt
+    - FireEye_Issuing_CA2_SHA2.crt
+  register: __base_cacert_copy
+
+- name: Update CA bundle with FireEye CA certificates
+  command: "{{ base_cacert_update_cmd }}"
+  when: __base_cacert_copy.changed

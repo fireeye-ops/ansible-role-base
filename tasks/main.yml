@@ -52,5 +52,6 @@
   when: base_edit_hosts
 
 - import_tasks: configure_sysstat.yml
+- import_tasks: configure_ssl.yml
 
 # vim:ft=ansible:

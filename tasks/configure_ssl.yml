@@ -6,7 +6,7 @@
 - name: Copy FireEye CA certificates to system
   copy:
     src: "{{ item }}"
-    dest: "{{ base_cacerts_path }}"
+    dest: "{{ base_cacert_path }}"
   with_items:
     - FireEye_Root_CA_SHA1.crt
     - FireEye_Root_CA_SHA2.crt
